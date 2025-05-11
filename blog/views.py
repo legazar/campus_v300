@@ -148,13 +148,13 @@ def paiement(request,epreuve_id):
 
     # Créez le lien de paiement avec les paramètres requis
     ep = str(epreuve_id)
-    lien = get_absolute_url(f'apercu/{ep}')
-    lien2 = get_absolute_url(f'epreuve/telechargement/UIQBGG8SF46ASF466F4S56F4S6FSFNASGS6+565654654654/5465465GSGSAGSA6GAS4SF5454544{ep}56DG16ASSJKFNSKF/')
+    lien = get_absolute_url(f'epreuve/apercu/{ep}')
+    lien2 = get_absolute_url(f'epreuve/telechargement/{ep}/')
 
-    print ( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',ep)
+    print ( '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', lien2)
 
     payment_link = campay.get_payment_link({
-        "amount": "5",
+        "amount": "6",
         "currency": "XAF",
         "description": "some description",
         "external_reference": "",
@@ -162,8 +162,8 @@ def paiement(request,epreuve_id):
         "first_name": "",
         "last_name": last_name,
         "email": email,
-        "redirect_url": lien2,  # URL de redirection après paiement réussi
-        "failure_redirect_url": lien,  # URL de redirection en cas d'échec de paiement
+        "redirect_url": lien,  # URL de redirection après paiement réussi
+        "failure_redirect_url": lien2,  # URL de redirection en cas d'échec de paiement
         "payment_options": "MOMO,CARD"
     })
 
@@ -194,8 +194,8 @@ def paiement_correction(request,correction_id):
 
     # Créez le lien de paiement avec les paramètres requis
     ep = str(correction_id)
-    lien = get_absolute_url (f'http://127.0.0.1:8000/apercu_correction/ {ep}')
-    lien2 = get_absolute_url (f'http://127.0.0.1:8000/correction/telechargement_correction/osgkmodngosangoasngonasognos1 11o313 1o1614wgwg4g/wtw5tw5t6w54w {ep} 564 +5dgwwwgGKOMWFWF5F5W5FS5SF/')
+    lien = get_absolute_url (f'correction/apercu_correction/ {ep}')
+    lien2 = get_absolute_url (f'correction/telechargement_correction/{ep}/')
     
     payment_link = campay.get_payment_link({
         "amount": "5",
@@ -206,8 +206,8 @@ def paiement_correction(request,correction_id):
         "first_name": "",
         "last_name": last_name,
         "email": email,
-        "redirect_url": lien2,  # URL de redirection après paiement réussi
-        "failure_redirect_url": lien,  # URL de redirection en cas d'échec de paiement
+        "redirect_url": lien,  # URL de redirection après paiement réussi
+        "failure_redirect_url": lien2,  # URL de redirection en cas d'échec de paiement
         "payment_options": "MOMO,CARD"
     })
 
@@ -232,7 +232,7 @@ def telechargement(request, epreuve_id): # telechargement des epreuves avec sauv
     
     context = { 'telecharge' : telecharge}
 
-    acheteur = Acheter.objects.create(user=user,epreuve=telecharge)
+    acheteur = Acheter.objects.create(acheteur=user,epreuve=telecharge)
     acheteur.save() # sauvegarde les identifiant de l'utilisateur et de l'epreuve qu'il a achetee
     return render ( request, 'telechargement.html', context)
 
